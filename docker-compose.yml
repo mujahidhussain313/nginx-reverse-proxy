@@ -1,0 +1,30 @@
+version: '3.8'
+services:  
+  server:
+    build:
+      context: ./Api
+      dockerfile: Dockerfile
+    volumes:
+      - ./Api:/app  
+    ports:
+      - 3001:3001
+    networks:
+      - mern-net       
+    container_name: server
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    volumes:
+      - ./client:/app 
+    ports:
+      - 3000:80
+    depends_on:
+      - server  
+    networks:
+      - mern-net   
+    container_name: client  
+
+
+networks:
+  mern-net:
